@@ -122,6 +122,15 @@ namespace HumaneSociety
             }
         }
 
+        public static void DisplayEmployeeInfo(Employee employee)
+        {
+            Console.WriteLine("First Name: " + employee.FirstName);
+            Console.WriteLine("Last Name: " + employee.LastName);
+            Console.WriteLine("User Name: " + employee.UserName);
+            Console.WriteLine("Employee Number: " + employee.EmployeeNumber);
+            Console.WriteLine("Email: " + employee.Email);
+        }
+
         internal static void DisplayClientInfo(Client client)
         {
             List<string> info = new List<string>() { client.FirstName, client.LastName, client.Email, client.Address.USState.Name };

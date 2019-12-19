@@ -163,25 +163,30 @@ namespace HumaneSociety
 
         //// TODO Items: ////
 
-        // TODO: Allow any of the CRUD operations to occur here
+        // Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
-            //if (CheckEmployeeUserNameExists)
-            //    switch (crudOperation)
-            //    {
-            //        case "update":
-
-            //        case "read":
-
-            //        case "delete":
-
-            //        case "create":
-
-            //        default:
-            //            Console.WriteLine("Not a valid query");
-            //            break;
-            //    }
-            throw new NotImplementedException();
+            switch (crudOperation)
+            {
+                case "update":
+                    var employeeToUpdate = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+                    employeeToUpdate = employee;
+                    break;
+                case "read":
+                    UserInterface.DisplayEmployeeInfo(employee);
+                    break;
+                case "delete":
+                    db.Employees.DeleteOnSubmit(employee);
+                    db.SubmitChanges();
+                    break;
+                case "create":
+                    db.Employees.InsertOnSubmit(employee);
+                    db.SubmitChanges();
+                    break;
+                default:
+                    Console.WriteLine("Not a valid query");
+                    break;
+            }
         }
 
         // Animal CRUD Operations
@@ -230,7 +235,7 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
         
-        // TODO: Animal Multi-Trait Search
+        // Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             throw new NotImplementedException();
