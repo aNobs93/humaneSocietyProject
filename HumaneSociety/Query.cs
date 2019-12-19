@@ -289,6 +289,8 @@ namespace HumaneSociety
             Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
             AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
 
+            shotGiven.DateReceived = DateTime.Now;
+
             animal.AnimalShots.Add(shotGiven);
         }
     }
