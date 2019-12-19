@@ -162,10 +162,25 @@ namespace HumaneSociety
 
 
         //// TODO Items: ////
-        
+
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
+            //if (CheckEmployeeUserNameExists)
+            //    switch (crudOperation)
+            //    {
+            //        case "update":
+
+            //        case "read":
+
+            //        case "delete":
+
+            //        case "create":
+
+            //        default:
+            //            Console.WriteLine("Not a valid query");
+            //            break;
+            //    }
             throw new NotImplementedException();
         }
 
@@ -189,12 +204,7 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-<<<<<<< HEAD
-            int animalId = animal.AnimalId;
-            db.Animals.DeleteOnSubmit(animalId);
-=======
             db.Animals.DeleteOnSubmit(animal);
->>>>>>> 3c4dd8d9d6f64271ee645343fdfe6cde0bf2d016
             db.SubmitChanges();
         }
         
