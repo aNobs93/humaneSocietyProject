@@ -223,7 +223,7 @@ namespace HumaneSociety
         
         internal static Room GetRoom(int animalId)
         {
-            var room = db.Rooms.Where(r => r.AnimalId == animalId).FirstOrDefault();
+            var room = db.Rooms.Where(r => r.RoomId == animalId).FirstOrDefault();
             return room;
         }
         
