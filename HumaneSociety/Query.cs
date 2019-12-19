@@ -178,8 +178,8 @@ namespace HumaneSociety
 
         internal static Animal GetAnimalByID(int id)
         {
-            var Animal = db.Animals.Where(a => a.AnimalId == id).FirstOrDefault();
-            return Animal;
+            var animal = db.Animals.Where(a => a.AnimalId == id).FirstOrDefault();
+            return animal;
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
@@ -189,8 +189,7 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException(); int animalId = animal.AnimalId;
-            db.Animals.DeleteOnSubmit(animalId);
+            db.Animals.DeleteOnSubmit(animal);
             db.SubmitChanges();
         }
         
