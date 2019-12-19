@@ -184,7 +184,7 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
-        // TODO: Animal CRUD Operations
+        // Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
             db.Animals.InsertOnSubmit(animal);
@@ -198,8 +198,30 @@ namespace HumaneSociety
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {            
-            
+        {
+            Animal originalAnimal = null;
+
+            try
+            {
+                originalAnimal = db.Animals.Where(a => a.AnimalId == animalId).FirstOrDefault();
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("No animals have a AnimalId that matches the Animal passed in.");
+                Console.WriteLine("No updates have been made.");
+                return;
+            }
+
+            originalAnimal.Category.Name = updates[1];
+            originalAnimal.Name = updates[2];
+            originalAnimal.Age = Convert.ToInt32(updates[3]);
+            originalAnimal.Demeanor = updates[4];
+            originalAnimal.KidFriendly = bool.Parse(updates[5]);
+            originalAnimal.PetFriendly = bool.Parse(updates[6]);
+            originalAnimal.Weight = Convert.ToInt32(updates[7]);
+            originalAnimal.AnimalId = Convert.ToInt32(updates[8]);
+
+            db.SubmitChanges();
         }
 
         internal static void RemoveAnimal(Animal animal)
@@ -214,7 +236,7 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
          
-        // TODO: Misc Animal Things
+        // Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
             int categoryID = Convert.ToInt32(db.Categories.Where(a => a.Name == categoryName));
@@ -266,8 +288,15 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
+<<<<<<< HEAD
             
        
+=======
+            Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
+            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
+
+            animal.AnimalShots.Add(shotGiven);
+>>>>>>> 3f9a5c0b31ad5fa325ccc7aa70a3e052bcaa355e
         }
     }
 }
