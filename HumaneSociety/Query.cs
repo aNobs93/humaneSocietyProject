@@ -178,8 +178,8 @@ namespace HumaneSociety
 
         internal static Animal GetAnimalByID(int id)
         {
-            var Animal = db.Animals.Where(a => a.AnimalId == id).FirstOrDefault();
-            return Animal;
+            var animal = db.Animals.Where(a => a.AnimalId == id).FirstOrDefault();
+            return animal;
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
@@ -189,8 +189,12 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
+<<<<<<< HEAD
             int animalId = animal.AnimalId;
             db.Animals.DeleteOnSubmit(animalId);
+=======
+            db.Animals.DeleteOnSubmit(animal);
+>>>>>>> 3c4dd8d9d6f64271ee645343fdfe6cde0bf2d016
             db.SubmitChanges();
         }
         
