@@ -184,7 +184,7 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
-        // TODO: Animal CRUD Operations
+        // Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
             db.Animals.InsertOnSubmit(animal);
@@ -236,7 +236,7 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
          
-        // TODO: Misc Animal Things
+        // Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
             int categoryID = Convert.ToInt32(db.Categories.Where(a => a.Name == categoryName));
@@ -286,7 +286,10 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+            Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
+            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
+
+            animal.AnimalShots.Add(shotGiven);
         }
     }
 }
