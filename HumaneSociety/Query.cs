@@ -288,15 +288,11 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-<<<<<<< HEAD
-            
-       
-=======
+
             Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
             AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
 
             animal.AnimalShots.Add(shotGiven);
->>>>>>> 3f9a5c0b31ad5fa325ccc7aa70a3e052bcaa355e
         }
     }
 }
