@@ -322,6 +322,7 @@ namespace HumaneSociety
             }
 
             return adoptions;
+
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
@@ -362,6 +363,7 @@ namespace HumaneSociety
             AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
 
             shotGiven.DateReceived = DateTime.Now;
+
 
             animal.AnimalShots.Add(shotGiven);
         }
