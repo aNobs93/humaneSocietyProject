@@ -255,42 +255,74 @@ namespace HumaneSociety
             return Convert.ToInt32(dietPlanId);
         }
 
-        // TODO: Adoption CRUD Operations
+        // Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
-            db.Adoptions.InsertOnSubmit(adopt);
-            db.SubmitChanges();
+            if (animal.AdoptionStatus == "available")
+            {
+                var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
+                adopt.PaymentCollected = true;
+                db.Adoptions.InsertOnSubmit(adopt);
+                db.SubmitChanges();
+            }
+            else
+            {
+                Console.WriteLine(animal.Name + "is not available for adoption.");
+            }
         }
 
-        internal static IQueryable<Adoption> GetPendingAdoptions()
+        internal static List<Adoption> GetPendingAdoptions()
         {
+            List<Adoption> adoptions = new List<Adoption>();
+            foreach(Adoption adoption in db.Adoptions)
+            {
+                adoptions.Add(adoption);
+            }
+
+            return adoptions;
 
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            if(isAdopted == true)
+            {
+                adoption.ApprovalStatus = "Approved";
+                var animal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+                animal.AdoptionStatus = "not available";
+                //RemoveAnimal(animal);
+            }
+            else
+            {
+                adoption.ApprovalStatus = "Not Approved";
+                var animal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+                animal.AdoptionStatus = "available";
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var adoption = db.Adoptions.Where(a => (a.AnimalId == animalId && a.ClientId == clientId)).FirstOrDefault();
+            db.Adoptions.DeleteOnSubmit(adoption);
+            db.SubmitChanges();
         }
 
-        // TODO: Shots Stuff
+        // Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
             var AnimalShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
             return AnimalShot;
- 
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
 
             Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
-            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();           
+            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
+
+            shotGiven.DateReceived = DateTime.Now;
+
+
             animal.AnimalShots.Add(shotGiven);
         }
     }

@@ -63,7 +63,7 @@ namespace HumaneSociety
             Console.Clear();
             List<string> adoptionInfo = new List<string>();
             int counter = 1;
-            var adoptions = Query.GetPendingAdoptions().ToList();
+            var adoptions = Query.GetPendingAdoptions();
             if(adoptions.Count > 0)
             {
                 foreach(Adoption adoption in adoptions)
