@@ -265,7 +265,7 @@ namespace HumaneSociety
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
@@ -290,8 +290,7 @@ namespace HumaneSociety
         {
 
             Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
-            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
-
+            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();           
             animal.AnimalShots.Add(shotGiven);
         }
     }
