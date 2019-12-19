@@ -193,7 +193,7 @@ namespace HumaneSociety
 
         internal static Animal GetAnimalByID(int id)
         {
-            var animal = db.Animals.Where(a => a.AnimalId == id).;
+            var animal = db.Animals.Where(a => a.AnimalId == id).FirstOrDefault();
             return animal;
         }
 
@@ -236,9 +236,7 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
-            db.Adoptions.InsertOnSubmit(adopt);
-            db.SubmitChanges();
+            
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
