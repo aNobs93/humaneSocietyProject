@@ -238,14 +238,50 @@ namespace HumaneSociety
         // Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            throw new NotImplementedException();
+            IQueryable<Animal> result = db.Animals;
+
+            foreach(KeyValuePair<int, string> item in updates)
+            {
+                switch (item.Key)
+                {
+                    case 1:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        //selection.Add(item);
+                        break;
+                    case 2:
+                        result = result.Where(c => c.Name == item.Value);
+                        break;
+                    case 3:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        break;
+                    case 4:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        break;
+                    case 5:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        break;
+                    case 6:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        break;
+                    case 7:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        break;
+                    case 8:
+                        result = result.Where(c => c.Category.Name == item.Value);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return result;
         }
          
         // Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            int categoryID = Convert.ToInt32(db.Categories.Where(a => a.Name == categoryName));
-            return categoryID;
+            Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
+            return category.CategoryId;
         }
         
         internal static Room GetRoom(int animalId)
@@ -256,7 +292,7 @@ namespace HumaneSociety
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            var dietPlanId = db.DietPlans.Where(a => a.Name == dietPlanName).Select(a => a);
+            var dietPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(a => a);
             return Convert.ToInt32(dietPlanId);
         }
 
@@ -265,6 +301,7 @@ namespace HumaneSociety
         {
             if (animal.AdoptionStatus == "available")
             {
+                //possibly add approval status = pending
                 var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
                 adopt.PaymentCollected = true;
                 db.Adoptions.InsertOnSubmit(adopt);
