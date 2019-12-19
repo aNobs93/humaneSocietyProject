@@ -189,7 +189,7 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException(); int animalId = animal.AnimalId;
+            int animalId = animal.AnimalId;
             db.Animals.DeleteOnSubmit(animalId);
             db.SubmitChanges();
         }
@@ -203,7 +203,8 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            int categoryID = Convert.ToInt32(db.Categories.Where(a => a.Name == categoryName));
+            return categoryID;
         }
         
         internal static Room GetRoom(int animalId)
