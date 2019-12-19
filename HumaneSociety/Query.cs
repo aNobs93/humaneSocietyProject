@@ -236,7 +236,9 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            
+            var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
+            db.Adoptions.InsertOnSubmit(adopt);
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
