@@ -263,9 +263,15 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
-        internal static IQueryable<Adoption> GetPendingAdoptions()
+        internal static List<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            List<Adoption> adoptions = new List<Adoption>();
+            foreach(Adoption adoption in db.Adoptions)
+            {
+                adoptions.Add(adoption);
+            }
+
+            return adoptions;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
@@ -275,7 +281,9 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var adoption = db.Adoptions.Where(a => (a.AnimalId == animalId && a.ClientId == clientId)).FirstOrDefault();
+            db.Adoptions.DeleteOnSubmit(adoption);
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
@@ -283,7 +291,6 @@ namespace HumaneSociety
         {
             var AnimalShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
             return AnimalShot;
- 
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
