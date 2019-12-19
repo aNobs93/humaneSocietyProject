@@ -255,12 +255,20 @@ namespace HumaneSociety
             return Convert.ToInt32(dietPlanId);
         }
 
-        // TODO: Adoption CRUD Operations
+        // Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
-            db.Adoptions.InsertOnSubmit(adopt);
-            db.SubmitChanges();
+            if (animal.AdoptionStatus == "available")
+            {
+                var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
+                adopt.PaymentCollected = true;
+                db.Adoptions.InsertOnSubmit(adopt);
+                db.SubmitChanges();
+            }
+            else
+            {
+                Console.WriteLine(animal.Name + "is not available for adoption.");
+            }
         }
 
         internal static List<Adoption> GetPendingAdoptions()
@@ -276,7 +284,19 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            if(isAdopted == true)
+            {
+                adoption.ApprovalStatus = "Approved";
+                var animal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+                animal.AdoptionStatus = "not available";
+                //RemoveAnimal(animal);
+            }
+            else
+            {
+                adoption.ApprovalStatus = "Not Approved";
+                var animal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+                animal.AdoptionStatus = "available";
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
@@ -286,7 +306,7 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
-        // TODO: Shots Stuff
+        // Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
             var AnimalShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
