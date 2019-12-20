@@ -252,22 +252,22 @@ namespace HumaneSociety
                         result = result.Where(c => c.Name == item.Value);
                         break;
                     case 3:
-                        result = result.Where(c => c.Category.Name == item.Value);
+                        result = result.Where(c => c.Age == Convert.ToInt32(item.Value));
                         break;
                     case 4:
-                        result = result.Where(c => c.Category.Name == item.Value);
+                        result = result.Where(c => c.Demeanor == item.Value);
                         break;
                     case 5:
-                        result = result.Where(c => c.Category.Name == item.Value);
+                        result = result.Where(c => c.KidFriendly == Convert.ToBoolean(item.Value));
                         break;
                     case 6:
-                        result = result.Where(c => c.Category.Name == item.Value);
+                        result = result.Where(c => c.PetFriendly == Convert.ToBoolean(item.Value));
                         break;
                     case 7:
-                        result = result.Where(c => c.Category.Name == item.Value);
+                        result = result.Where(c => c.Weight == Convert.ToInt32(item.Value));
                         break;
                     case 8:
-                        result = result.Where(c => c.Category.Name == item.Value);
+                        result = result.Where(c => c.AnimalId == Convert.ToInt32(item.Value));
                         break;
                     default:
                         break;
