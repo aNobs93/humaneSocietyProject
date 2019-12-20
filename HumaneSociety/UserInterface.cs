@@ -229,5 +229,19 @@ namespace HumaneSociety
             }
             return searchParameters;
         }
+
+        public static string EnterNewDietPlanFoodType()
+        {
+            Console.WriteLine("Please enter FoodType for the animals");
+            string answer = Console.ReadLine();
+            return answer;
+        }
+
+        public static int EnterNewDietPlanFoodAmountInCups()
+        {
+            Console.WriteLine("Please enter the amount of food in cups");
+            int answer = Convert.ToInt32(Console.ReadLine());
+            return answer;
+        }
     }
 }
