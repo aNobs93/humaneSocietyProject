@@ -280,8 +280,25 @@ namespace HumaneSociety
         // Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
-            return category.CategoryId;
+            try
+            {
+                Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
+                return category.CategoryId;
+            }
+            catch(NullReferenceException)
+            {
+                AddCategoryId(categoryName);
+                Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
+                return category.CategoryId;
+            }
+        }
+
+        internal static void AddCategoryId(string categoryName)
+        {
+            Category newCategory = new Category();
+            newCategory.Name = categoryName;
+            db.Categories.InsertOnSubmit(newCategory);
+            db.SubmitChanges();
         }
         
         internal static Room GetRoom(int animalId)
@@ -299,17 +316,28 @@ namespace HumaneSociety
         // Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            if (animal.AdoptionStatus == "available")
+            if (animal.AdoptionStatus == "available" || animal.AdoptionStatus == "pending")
             {
-                //possibly add approval status = pending
-                var adopt = db.Adoptions.Where(a => (a.ClientId == client.ClientId && a.AnimalId == animal.AnimalId)).Select(a => a).Single();
+                Adoption adopt = new Adoption();
+                adopt.AnimalId = animal.AnimalId;
+                adopt.ClientId = client.ClientId;
+                adopt.ApprovalStatus = "pending";
                 adopt.PaymentCollected = true;
                 db.Adoptions.InsertOnSubmit(adopt);
-                db.SubmitChanges();
+                try
+                {
+                    db.SubmitChanges();
+                }
+                catch
+                {
+                    Console.WriteLine("You have already applied to adopt " + animal.Name);
+                    Console.ReadLine();
+                }
             }
             else
             {
-                Console.WriteLine(animal.Name + "is not available for adoption.");
+                Console.WriteLine(animal.Name + " is not available for adoption.");
+                Console.ReadLine();
             }
         }
 
