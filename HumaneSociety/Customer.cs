@@ -160,7 +160,7 @@ namespace HumaneSociety
         }
         private static int GetState()
         {
-            UserInterface.DisplayUserOptions("Please enter your state (abbreviation or full state name");
+            UserInterface.DisplayUserOptions("Please enter your state (abbreviation or full state name)");
             string state = UserInterface.GetUserInput();
             var states = Query.GetStates();
             var stateNames = from territory in states select territory.Name.ToLower();
@@ -265,7 +265,7 @@ namespace HumaneSociety
         {
             List<string> options = new List<string>() { "What would you like to update? (Please enter number of option)", "1: Name", "2: Address", "3: Email", "4: Username", "5: Password", "6. Back" };
             int input = default(int);
-            while (input != 9)
+            while (input != 6)
             {
                 try
                 {
@@ -312,7 +312,7 @@ namespace HumaneSociety
         {
             Console.Clear();
             Console.Clear();
-            UserInterface.DisplayUserOptions("Current Password: " + client.Password + " What is your new Password?");
+            UserInterface.DisplayUserOptions("Current Password: " + client.Password + "\nWhat is your new Password?");
             client.Password = UserInterface.GetUserInput();
             Query.UpdateClient(client);
         }
