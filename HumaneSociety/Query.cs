@@ -190,7 +190,7 @@ namespace HumaneSociety
         }
 
         // Animal CRUD Operations
-        internal static void AddAnimal(Animal animal)
+        public static void AddAnimal(Animal animal)
         {
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
@@ -280,10 +280,28 @@ namespace HumaneSociety
         // Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
-            return category.CategoryId;
+            try
+            {
+                Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
+                return category.CategoryId;
+            }
+            catch (NullReferenceException)
+            {
+                AddCategoryId(categoryName);
+                Category category = db.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
+                return category.CategoryId;
+            }
         }
-        
+
+
+        internal static void AddCategoryId(string categoryName)
+        {
+            Category newCategory = new Category();
+            newCategory.Name = categoryName;
+            db.Categories.InsertOnSubmit(newCategory);
+            db.SubmitChanges();
+        }
+
         internal static Room GetRoom(int animalId)
         {
             var room = db.Rooms.Where(r => r.RoomId == animalId).FirstOrDefault();
@@ -292,8 +310,30 @@ namespace HumaneSociety
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            var dietPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(a => a);
-            return Convert.ToInt32(dietPlanId);
+            try
+            {
+                var dietPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(a => a);
+                     return Convert.ToInt32(dietPlanId);
+            }
+            catch(InvalidCastException)
+            {
+                AddDietPlan(dietPlanName);
+                var dietPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(a => a);
+                return Convert.ToInt32(dietPlanId);
+            }
+            
+        }
+
+        internal static void AddDietPlan(string dietPlanName)
+        {
+            DietPlan dietPlan = new DietPlan();
+            dietPlan.Name = dietPlanName;
+            dietPlan.FoodType = UserInterface.EnterNewDietPlanFoodType();
+            dietPlan.FoodAmountInCups = UserInterface.EnterNewDietPlanFoodAmountInCups();
+            db.DietPlans.InsertOnSubmit(dietPlan);
+            db.SubmitChanges();
+
+
         }
 
         // Adoption CRUD Operations

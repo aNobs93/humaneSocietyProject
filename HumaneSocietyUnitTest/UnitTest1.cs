@@ -10,6 +10,15 @@ namespace HumaneSocietyUnitTest
         [TestMethod]
         public void TestMethod1()
         {
+            Animal animal = new Animal();
+            //arrange
+            string furryFriend = "bat";
+            string expected;
+            string actual;
+            //act
+            Query.AddAnimal();
+            //assert
+
         }
     }
 }
