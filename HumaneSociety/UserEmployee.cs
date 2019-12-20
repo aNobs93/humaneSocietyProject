@@ -9,7 +9,7 @@ namespace HumaneSociety
     class UserEmployee : User
     {
         Employee employee;
-        
+
         public override void LogIn()
         {
             if (CheckIfNewUser())
@@ -160,10 +160,11 @@ namespace HumaneSociety
         private void CheckShots(Animal animal)
         {
             List<string> shotInfo = new List<string>();
-            var shots = Query.GetShots(animal);
-            foreach(AnimalShot shot in shots.ToList())
+            List<AnimalShot> shots = Query.GetShots(animal);
+            foreach(AnimalShot shot in shots)
             {
-                shotInfo.Add($"{shot.Shot.Name} Date: {shot.DateReceived}");
+                string infoToAdd = $"{shot.Shot.Name} Date: {shot.DateReceived}";
+                shotInfo.Add(infoToAdd);
             }
 
             if (shotInfo.Count > 0)
