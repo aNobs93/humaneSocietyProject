@@ -1,0 +1,43 @@
+INSERT INTO Catergories VALUES('dog')
+INSERT INTO Catergories VALUES('cat')
+INSERT INTO Catergories VALUES('llama')
+INSERT INTO Catergories VALUES('alpaca')
+INSERT INTO Catergories VALUES('giant squid')
+
+INSERT INTO DietPlans VALUES('carnivore', 'meat', 2)
+INSERT INTO DietPlans VALUES('herbivore', 'veggies', 5)
+INSERT INTO DietPlans VALUES('keto', 'butter', 2)
+INSERT INTO DietPlans VALUES('cigarette', 'cigarettes', 20)
+INSERT INTO DietPlans VALUES('pica', 'dirt', 12)
+
+INSERT INTO Employees VALUES('Elias', 'Holter', 'eliasholter1', 'sqlsucks', 1, 'eliasholter1@gmail.com')
+INSERT INTO Employees VALUES('Adam', 'Nobs', 'adamnobs1', 'sqlisgreat', 2, 'adamnobs1@gmail.com')
+INSERT INTO Employees VALUES('Boba', 'Fett', 'bobafett1', 'babyyodaisafriendofmine', 3, 'bobafett1@gmail.com')
+INSERT INTO Employees VALUES('Peter', 'Griffin', 'peateargryphon', 'MEG', 4, 'petergriffon1@gmail.com')
+INSERT INTO Employees VALUES('Mike', 'Terrill', 'papaterrill', 'GreenBayP@ck3rsBestNFLTeam412!', 5, 'miketerril1@gmail.com')
+
+INSERT INTO Animals VALUES('Chewy', 65, 11, 'aggressive', 0, 0, 'male', 'available', 4, 4, 5)
+INSERT INTO Animals VALUES('Lucy Fur', 10, 666, 'scheming', 1, 1, 'female', 'available', 2, 3, 2)
+INSERT INTO Animals VALUES('Shawty', 321, 1000, 'passive', 0, 1, 'unknown', 'unavailable', 5, 5, 1)
+INSERT INTO Animals VALUES('Tina', 400, 2, 'lethargic', 1, 1, 'female', 'available', 3, 3, 5)
+INSERT INTO Animals VALUES('Brian', 28, 8, 'alcoholic', 1, 0, 'male', 'unavailable', 1, 2, 4)
+
+INSERT INTO Rooms VALUES(1, 4)
+INSERT INTO Rooms VALUES(2, 1)
+INSERT INTO Rooms VALUES(3, 5)
+INSERT INTO Rooms VALUES(4, 2)
+INSERT INTO Rooms VALUES(5, 3)
+INSERT INTO Rooms VALUES(6, null)
+INSERT INTO Rooms VALUES(7, null)
+INSERT INTO Rooms VALUES(8, null)
+INSERT INTO Rooms VALUES(9, null)
+INSERT INTO Rooms VALUES(10, null)
+
+INSERT INTO Clients VALUES('Meg', 'Griffin', 'mgriffin1', 'hairybeast', null, 'meggriffin1@gmail.com');
+INSERT INTO Clients VALUES('Private', 'Ryan', 'pryan1', 'saveme', null, 'privateryan1@gmail.com');
+INSERT INTO Clients VALUES('Scuba', 'Steve', 'ssteve1', 'homework', null, 'scubasteve1@gmail.com');
+INSERT INTO Clients VALUES('Lil', 'Nicky', 'lnicky1', 'hellisnumber1', null, 'lilnicky1@gmail.com');
+INSERT INTO Clients VALUES('Steve', 'O', 'so1', 'jackass', null, 'steveo1@gmail.com');
+
+
+

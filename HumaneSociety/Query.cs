@@ -358,8 +358,9 @@ namespace HumaneSociety
             if(isAdopted == true)
             {
                 adoption.ApprovalStatus = "Approved";
-                var animal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
-                animal.AdoptionStatus = "not available";
+                //var animal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+                //animal.AdoptionStatus = "not available";
+                adoption.Animal.AdoptionStatus = "not available";
                 //RemoveAnimal(animal);
             }
             else
@@ -378,22 +379,36 @@ namespace HumaneSociety
         }
 
         // Shots Stuff
-        internal static IQueryable<AnimalShot> GetShots(Animal animal)
+        internal static List<AnimalShot> GetShots(Animal animal)
         {
-            var AnimalShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
-            return AnimalShot;
+            List<AnimalShot> allShots = new List<AnimalShot>();
+
+            foreach (var item in animal.AnimalShots)
+            {
+                var animalShot = animal.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+                allShots.Add(animalShot);
+            }
+
+            return allShots;
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-
-            Shot shot = db.Shots.Where(s => s.Name == shotName).FirstOrDefault();
-            AnimalShot shotGiven = db.AnimalShots.Where(s => s.ShotId == shot.ShotId).FirstOrDefault();
-
-            shotGiven.DateReceived = DateTime.Now;
-
-
-            animal.AnimalShots.Add(shotGiven);
+            var shot = db.Shots.Where(o => o.Name == shotName).SingleOrDefault();
+            try
+            {
+                var animalShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId && a.ShotId == shot.ShotId).SingleOrDefault();
+                animalShot.DateReceived = DateTime.Now;
+            }
+            catch
+            {
+                AnimalShot shotGiven = new AnimalShot();
+                shotGiven.ShotId = shot.ShotId;
+                shotGiven.AnimalId = animal.AnimalId;
+                shotGiven.DateReceived = DateTime.Now;
+                animal.AnimalShots.Add(shotGiven);
+            }
+            db.SubmitChanges();
         }
     }
 }
